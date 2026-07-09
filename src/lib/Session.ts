@@ -12,7 +12,6 @@ class Session extends EventEmitter {
   socket : net.Socket;
   online : boolean;
   attempts : number = 0;
-  closeTimeout : NodeJS.Timeout | undefined;
 
   constructor(socket : net.Socket) {
     super();
@@ -136,52 +135,44 @@ class Session extends EventEmitter {
       }
 
       vscode.window.showTextDocument(textDocument, {preview: false}).then((textEditor : vscode.TextEditor) => {
-        this.handleChanges(textDocument, remoteFileIdx);
+        this.handleChanges(textDocument, remoteFile);
         L.info(`Opening ${remoteFile.remoteBaseName} from ${remoteFile.remoteHost}`);
         vscode.window.setStatusBarMessage(`Opening ${remoteFile.remoteBaseName} from ${remoteFile.remoteHost}`, 2000);
 
-        this.showSelectedLine(textEditor, remoteFileIdx);
+        this.showSelectedLine(textEditor, remoteFile);
       });
     });
   }
 
-  handleChanges(textDocument : vscode.TextDocument, remoteFileIdx : number) {
+  handleChanges(textDocument : vscode.TextDocument, remoteFile : RemoteFile) {
     L.trace('handleChanges', textDocument.fileName);
 
-    this.remoteFiles[remoteFileIdx].subscriptions.push(vscode.workspace.onDidSaveTextDocument((savedTextDocument : vscode.TextDocument) => {
+    remoteFile.subscriptions.push(vscode.workspace.onDidSaveTextDocument((savedTextDocument : vscode.TextDocument) => {
       // eslint-disable-next-line eqeqeq
       if (savedTextDocument == textDocument) {
-        this.save(remoteFileIdx);
+        this.save(remoteFile);
       }
     }));
 
-    this.remoteFiles[remoteFileIdx].subscriptions.push(vscode.workspace.onDidCloseTextDocument((closedTextDocument : vscode.TextDocument) => {
-      L.trace('onDidCloseTextDocument', closedTextDocument);
-      
-      // eslint-disable-next-line eqeqeq
-      if (closedTextDocument == textDocument) {
-        this.closeTimeout  && clearTimeout(this.closeTimeout);
-        // If you change the textDocument language, it will close and re-open the same textDocument, so we add
-        // a timeout to make sure it is really being closed before close the socket.
-        this.closeTimeout = setTimeout(() => {
-          L.trace('onDidCloseTextDocument close Timeout triggered');
-          this.close(this.remoteFiles[remoteFileIdx]);
-        }, 2);
-      }
-    }));
+    remoteFile.subscriptions.push(vscode.window.tabGroups.onDidChangeTabs((event : vscode.TabChangeEvent) => {
+      L.trace('onDidChangeTabs closed', event.closed.length);
 
-    this.remoteFiles[remoteFileIdx].subscriptions.push(vscode.workspace.onDidOpenTextDocument((openedTextDocument : vscode.TextDocument) => {
-      L.trace('onDidOpenTextDocument', openedTextDocument);
+      const closedOurFile = event.closed.some(tab => {
+        if (!(tab.input instanceof vscode.TabInputText)) {
+          return false;
+        }
 
-      // eslint-disable-next-line eqeqeq
-      if (openedTextDocument == textDocument) {
-        this.closeTimeout  && clearTimeout(this.closeTimeout);
+        return tab.input.uri.fsPath?.toLowerCase() === remoteFile.localFilePath?.toLowerCase();
+      });
+
+      if (closedOurFile) {
+        this.close(remoteFile);
       }
     }));
   }
 
-  showSelectedLine(textEditor : vscode.TextEditor, remoteFileIdx : number) {
-    var selection = +(this.remoteFiles[remoteFileIdx].getVariable('selection'));
+  showSelectedLine(textEditor : vscode.TextEditor, remoteFile : RemoteFile) {
+    var selection = +(remoteFile.getVariable('selection'));
     if (selection) {
       var line = ((selection-1) > 0) ? (selection-1) : 0;
       textEditor.revealRange(new vscode.Range(line, 0, line, 0), vscode.TextEditorRevealType.InCenter);
@@ -189,9 +180,8 @@ class Session extends EventEmitter {
     }
   }
 
-  save(remoteFileIdx : number) {
+  save(remoteFile : RemoteFile) {
     L.trace('save');
-    let remoteFile = this.remoteFiles[remoteFileIdx];
 
     if (!this.online) {
       L.error('NOT online');
@@ -214,6 +204,11 @@ class Session extends EventEmitter {
 
   close(remoteFile : RemoteFile) {
     L.trace('close');
+
+    if (!this.remoteFiles.includes(remoteFile)) {
+      L.trace('close called for already closed remoteFile');
+      return;
+    }
 
     if (!this.online) {
       L.error('NOT online');

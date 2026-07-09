@@ -8,10 +8,9 @@ This is a fork of [rafaelmaiolla/remote-vscode](https://github.com/rafaelmaiolla
 - Closing files with `-w` flag which is useful for using rmate in `EDITOR`-env variable.  
   Example: `EDITOR='rmate -w' sudoedit somefile`
 
-  Due to a limitation in VS Code API (currently there's no API that would notify our Extetnsion when the user closed a Tab) we implemented a buttton here to alternatively close the Tab and the rmate-Session behind:  
-  ![](docs/close-document-buttton.png)
-  
-  Alternatively there's a command for closing single Sessions or all Sessions at once:  
+  When the VS Code tab is closed, the rmate session behind it is closed as well.
+
+  Alternatively there's a command for closing single Sessions or all Sessions at once:
   ![](docs/close-dialog.png)
 
 

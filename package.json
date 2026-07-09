@@ -57,11 +57,6 @@
           "type": "boolean",
           "default": true,
           "description": "If set to false, error for remote.port already in use won't be shown anymore."
-        },
-        "remote.showCloseIconInEditorTabBar": {
-          "type": "boolean",
-          "default": true,
-          "description": "If this option is set to false, the icon for closing a document is hidden. If you never use the `rmate -w` function, you can save some space in the editor view."
         }
       }
     },
@@ -85,22 +80,8 @@
       {
         "command": "extension.closeAllDocuments",
         "title": "rmate: Close all open Documents"
-      },
-      {
-        "command": "extension.closeActiveEditor",
-        "title": "rmate: Close Editor Tab in Focus",
-        "icon": "$(debug-disconnect)"
       }
-    ],
-    "menus": {
-      "editor/title": [
-        {
-          "command": "extension.closeActiveEditor",
-          "group": "navigation",
-          "when": "rmate.activeEditorIsOurs && config.remote.showCloseIconInEditorTabBar"
-        }
-      ]
-    }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
