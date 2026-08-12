@@ -1,22 +1,24 @@
 {
   "name": "rmate-vscode",
   "displayName": "RMate for VS Code",
-  "description": "A package that provides a server compatible with TextMate's `rmate` CLI.",
-  "version": "1.0.1",
-  "publisher": "dersimn",
+  "description": "A VS Code extension that provides a server compatible with TextMate's `rmate` CLI.",
+  "version": "1.1.1",
+  "publisher": "duncannah",
   "license": "MIT",
-  "author": "Simon Christmann <simon@christmann.email>",
+  "author": "duncannah (https://github.com/duncannah)",
   "contributors": [
+    "Simon Christmann <simon@christmann.email> (https://github.com/dersimn)",
     "Rafael Maiolla <rafaelmaiolla@gmail.com>",
     "Kevin Yarosh (https://github.com/ComfyDust)",
     "Roy Ivy III (https://github.com/rivy)"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafaelmaiolla/remote-vscode.git"
+    "url": "https://github.com/duncannah/rmate-vscode.git"
   },
+  "homepage": "https://github.com/duncannah/rmate-vscode#readme",
   "bugs": {
-    "url": "https://github.com/rafaelmaiolla/remote-vscode/issues"
+    "url": "https://github.com/duncannah/rmate-vscode/issues"
   },
   "engines": {
     "vscode": "^1.82.0"
@@ -90,25 +92,28 @@
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
+    "vsix": "vsce package",
+    "publish": "vsce publish",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/src/test/runTest.js"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.3",
-    "@types/vscode": "^1.82.0",
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
+    "@types/vscode": "^1.82.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "@vscode/vsce": "^3.9.2",
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
-    "typescript": "^5.2.2",
     "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "@vscode/test-electron": "^2.3.6"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "fs-extra": "^11.1.1",

@@ -1,5 +1,10 @@
- # Change Log
+# Changelog
 
- ## 1.1.0 (July 11, 2017)
- - Add `remote.dontShowPortAlreadyInUseError` setting that if set to true, error for remote.port already in use won't be shown anymore;
- - Add a status bar icon that shows the current server status.
+## 1.1.1 (August 12, 2026)
+
+- Close an RMate session automatically when its corresponding VS Code tab is closed.
+
+## 1.1.0 (July 11, 2017)
+
+- Add `remote.dontShowPortAlreadyInUseError` setting that if set to true, error for remote.port already in use won't be shown anymore;
+- Add a status bar icon that shows the current server status.
