@@ -6,6 +6,7 @@ src/**
 .gitignore
 .yarnrc
 pnpm-lock.yaml
+mise.toml
 webpack.config.js
 vsc-extension-quickstart.md
 **/tsconfig.json

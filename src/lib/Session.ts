@@ -41,14 +41,11 @@ class Session extends EventEmitter {
 
   parseChunk(buffer : Buffer) {
     L.trace('parseChunk', buffer.length);
-    L.trace('buffer', buffer);
-    L.trace('buffer.toString()', buffer.toString());
 
     if (!this.remoteFiles[this.currentId]?.waitingForData) {
       while (buffer.length) {
         const indexOfNextNewLine = buffer.indexOf('\n');
         const line = buffer.subarray(0, indexOfNextNewLine).toString('utf8');
-        L.trace('line', line);
         buffer = buffer.subarray(indexOfNextNewLine + 1);
 
         if (!line) {
@@ -73,7 +70,6 @@ class Session extends EventEmitter {
         // Lines contain data like: "key: value\n"
         const [key, value] = line.split(': ', 2);
         L.trace('key', key);
-        L.trace('value', value);
 
         if (key === 'data') {
           this.remoteFiles[this.currentId].dataSize = parseInt(value, 10);

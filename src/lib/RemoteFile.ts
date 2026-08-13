@@ -82,7 +82,7 @@ class RemoteFile {
   }
 
   setVariable(key : string, value : any) {
-    L.trace('addVariable', key, value);
+    L.trace('addVariable', key);
     this.variables.set(key, value);
   }
 

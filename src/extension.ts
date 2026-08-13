@@ -47,6 +47,7 @@ const restartServer = () => {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+  context.subscriptions.push(Logger.outputChannel);
   L.trace('pkg.name', pkg.name);
   if (workspaceConfiguration.get<boolean>('onstartup')) {
     startServer();
@@ -93,7 +94,6 @@ async function closeDocument() {
 
   const openFiles: Array<SessionQuickPick> = [...server.sessions].map(session => {
     const remoteHost = session.remoteFiles[0].remoteHost;
-    L.trace(remoteHost, session.remoteFiles);
 
     return {
       session,
@@ -102,10 +102,10 @@ async function closeDocument() {
       iconPath: new vscode.ThemeIcon('file' + (session.remoteFiles.length > 1) ? 's' : '')
     };
   });
-  L.trace('closeDocument > openFiles', openFiles);
+  L.trace('closeDocument > openFiles', openFiles.length);
 
   const selected = await vscode.window.showQuickPick(openFiles, {title: 'Open RMate Sessions:'});
-  L.trace('closeDocument > selected', selected);
+  L.trace('closeDocument > selected', selected !== undefined);
 
   selected?.session.closeAll();
 }
