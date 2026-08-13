@@ -2,26 +2,14 @@
 
 A VS Code extension that implements TextMate's `rmate` feature, allowing files on a remote machine to be opened and edited in your local VS Code window over an SSH tunnel.
 
-## Fork lineage
-
-This repository is a fork of [dersimn/rmate-vscode](https://github.com/dersimn/rmate-vscode), which is itself a fork of Rafael Maiolla's original [rafaelmaiolla/remote-vscode](https://github.com/rafaelmaiolla/remote-vscode). Thanks to Simon Christmann, Rafael Maiolla, and the other contributors for the work this version builds upon.
-
-This fork adds automatic cleanup of RMate sessions when their VS Code tabs are closed. It also retains improvements from the `dersimn` fork, including:
-
-- Open multiple files at once with `rmate file1 file2`
-- Close files opened with the `-w` flag, which is useful when using `rmate` in the `EDITOR` environment variable.
-  Example: `EDITOR='rmate -w' sudoedit somefile`
-
-  When the VS Code tab is closed, the corresponding RMate session is closed as well.
-
-  Alternatively, commands are available for closing individual sessions or all sessions at once:
-  ![](docs/close-dialog.png)
+This is a fork, see the section below for details.
 
 ## Installation
 
-- Install `duncannah.rmate-vscode` from the VS Code Extension Marketplace. Marketplace installations can be carried to your other desktop machines by VS Code Settings Sync.
-- Install an `rmate` client on the remote machine.\
-  I recommend [aurora/rmate](https://github.com/aurora/rmate) over the original one to avoid a Ruby dependency! ([`rmate-sh`](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/rm/rmate-sh/package.nix) in nixpkgs)
+- Install the package from your editor's extension manager.
+- Install an `rmate` client on the remote machine.
+  - I recommend [aurora/rmate](https://github.com/aurora/rmate) over the original one to avoid a Ruby dependency!\
+    ([rmate-sh](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/rm/rmate-sh/package.nix) in nixpkgs)
 
 ## Usage
 
@@ -56,13 +44,32 @@ This fork adds automatic cleanup of RMate sessions when their VS Code tabs are c
   EDITOR='rmate -w' sudoedit important_file
   ```
 
-- Extra: if you have a shared shell config, you can have it set `EDITOR` only for SSH sessions, in your `.bashrc` or `.zshrc`:
+- Extra: if you have a shared shell config, you can have it set `EDITOR` only for SSH sessions, in your shell config (e.g. `.zshrc`):
 
   ```bash
   if [[ -n "$SSH_CONNECTION" ]]; then
     export EDITOR='rmate -w'
   fi
   ```
+
+## Fork lineage
+
+This repository is a fork of [dersimn/rmate-vscode](https://github.com/dersimn/rmate-vscode), which is itself a fork of Rafael Maiolla's original [rafaelmaiolla/remote-vscode](https://github.com/rafaelmaiolla/remote-vscode). Thanks to Simon Christmann, Rafael Maiolla, and the other contributors for the work this version builds upon.
+
+This fork adds:
+
+- Automatic cleanup of RMate sessions when their VS Code tabs are closed.
+
+It also retains improvements from the `dersimn` fork, including:
+
+- Open multiple files at once with `rmate file1 file2`
+- Close files opened with the `-w` flag, which is useful when using `rmate` in the `EDITOR` environment variable.
+  Example: `EDITOR='rmate -w' sudoedit somefile`
+
+  When the VS Code tab is closed, the corresponding RMate session is closed as well.
+
+  Alternatively, commands are available for closing individual sessions or all sessions at once:
+  ![](docs/close-dialog.png)
 
 ## Credits and license
 
