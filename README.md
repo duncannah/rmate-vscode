@@ -52,6 +52,24 @@ This is a fork, see the section below for details.
   fi
   ```
 
+## Development
+
+The development toolchain is managed with [mise](https://mise.jdx.dev/):
+
+```bash
+mise install
+pnpm install --frozen-lockfile
+```
+
+Common commands:
+
+```bash
+pnpm run compile
+pnpm run lint
+pnpm test
+pnpm run vsix
+```
+
 ## Fork lineage
 
 This repository is a fork of [dersimn/rmate-vscode](https://github.com/dersimn/rmate-vscode), which is itself a fork of Rafael Maiolla's original [rafaelmaiolla/remote-vscode](https://github.com/rafaelmaiolla/remote-vscode). Thanks to Simon Christmann, Rafael Maiolla, and the other contributors for the work this version builds upon.
