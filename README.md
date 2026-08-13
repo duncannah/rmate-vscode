@@ -1,6 +1,6 @@
-# RMate for VS Code
+# RMate for Visual Studio Code
 
-A VS Code extension that implements TextMate's `rmate` feature, allowing files on a remote machine to be opened and edited in your local VS Code window over an SSH tunnel.
+A Visual Studio Code extension that implements TextMate's `rmate` feature, allowing files on a remote machine to be opened and edited in your local VS Code window over an SSH tunnel.
 
 This is a fork, see the section below for details.
 
