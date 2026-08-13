@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as fse from 'fs-extra';
 import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -104,7 +103,7 @@ class RemoteFile {
   initialize() {
     L.trace('initialize');
     this._localFilePath = path.join(os.tmpdir(), 'rmate-vscode', randomString(10), this.remoteHost || randomString(10), this.remoteBaseName || randomString(10));
-    fse.mkdirsSync(this.localDirectoryName);
+    fs.mkdirSync(this.localDirectoryName, {recursive: true});
     this.fileDescriptor = fs.openSync(this.localFilePath, 'w');
     this._waitingForData = true;
   }
