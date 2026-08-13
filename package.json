@@ -2,7 +2,7 @@
 	"name": "rmate-vscode",
 	"displayName": "RMate for Visual Studio Code",
 	"description": "A VS Code extension that provides a server compatible with TextMate's `rmate` CLI.",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"icon": "images/icon.png",
 	"packageManager": "pnpm@10.15.1",
 	"publisher": "duncannah",

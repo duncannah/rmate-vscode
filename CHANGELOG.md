@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2 (August 13, 2026)
+
+- Refactor away two runtime dependencies to use native APIs instead.
+- Small changes to documentation.
+
 ## 1.1.1 (August 12, 2026)
 
 - Close an RMate session automatically when its corresponding VS Code tab is closed.
