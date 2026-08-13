@@ -21,7 +21,7 @@ This fork adds automatic cleanup of RMate sessions when their VS Code tabs are c
 
 - Install `duncannah.rmate-vscode` from the VS Code Extension Marketplace. Marketplace installations can be carried to your other desktop machines by VS Code Settings Sync.
 - Install an `rmate` client on the remote machine.\
-  I recommend [aurora/rmate](https://github.com/aurora/rmate) over the original one, as you avoid a Ruby dependency! ([`rmate-rs`](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/rm/rmate-sh/package.nix) in nixpkgs)
+  I recommend [aurora/rmate](https://github.com/aurora/rmate) over the original one to avoid a Ruby dependency! ([`rmate-sh`](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/rm/rmate-sh/package.nix) in nixpkgs)
 
 ## Usage
 
